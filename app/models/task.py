@@ -7,6 +7,12 @@ class TaskType(str, Enum):
     SUMMARIZE = "summarize"
 
 class WorkflowTask(BaseModel):
+    '''
+    Represents a structured unit of work created by the Planner.
+
+    A task describes what the system should execute after the user's intent has been understood.
+    '''
+
     model_config = ConfigDict(extra="forbid")
 
     task_id: int = Field(ge=1)
