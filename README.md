@@ -1,63 +1,64 @@
-# ⚙️ AI Workflow Engine with Pydantic
+# Modular Intelligent Workflow Engine
 
-A type-safe, modular workflow engine for building reliable AI applications — built from the ground up with Python + Pydantic.
+A modular intelligent Python workflow engine designed to explore the software architecture behind intelligent applications.
 
-AI systems are not just about sending a prompt to an LLM and receiving an answer.
+The project models a complete request lifecycle:
 
-A reliable AI application needs to understand a request, create a plan, execute the right action, validate the result, and return a structured response.
+Request → Understand → Plan → Execute → Validate → Respond
 
-This project explores how to build that foundation without LangChain, LangGraph, or other agent frameworks.
+The implementation intentionally keeps the decision-making deterministic rather than introducing an LLM. The focus is on understanding the engineering structure around an intelligent system — data contracts, component responsibilities, task orchestration, tool execution, validation, configuration, logging, and error handling.
 
-## 🧠 What is this project?
 
-The AI Workflow Engine is a lightweight workflow system where every stage communicates through strongly typed Pydantic models.
+## Why This Project?
 
-&emsp;&emsp;&emsp;User Request\
-&emsp;&emsp;&emsp;&emsp; &emsp;│\
-&emsp;&emsp;&emsp;&emsp;&emsp;▼\
-&emsp;&emsp;&emsp;Parser Node\
-&emsp;&emsp;&emsp;&emsp; &emsp;│\
-&emsp;&emsp;&emsp;&emsp;&emsp;▼\
-&emsp;&emsp;&emsp;Planner Node\
-&emsp;&emsp;&emsp;&emsp; &emsp;│\
-&emsp;&emsp;&emsp;&emsp;&emsp;▼\
-&emsp;&emsp;&emsp;Workflow Task\
-&emsp;&emsp;&emsp;&emsp; &emsp;│\
-&emsp;&emsp;&emsp;&emsp;&emsp;▼\
-&emsp;&emsp;&emsp;Executor Node\
-&emsp;&emsp;&emsp;&emsp; &emsp;│\
-&emsp;&emsp;&emsp;&emsp;&emsp;▼\
-┌──────────────┐\
-│&emsp;&emsp;Tool Registry&emsp;&ensp;&emsp;│\
-└──────┬───────┘\
-&emsp;&ensp;&emsp;&emsp; &emsp;&ensp;|\
-   ┌──────┼──────┐\
-▼&emsp;&emsp;&emsp;&emsp;▼&emsp;       &emsp;&emsp;&emsp;▼\
- Answer Summarize Search\
-   Tool &emsp;&ensp;   Tool  &emsp; &emsp; Tool\
-   └──────┬──────┘\
-&emsp;&emsp;&emsp;&emsp;&emsp;▼\
-&emsp;&emsp;&emsp;Execution Result\
-&emsp;&emsp;&emsp;&emsp; &emsp;│\
-&emsp;&emsp;&emsp;&emsp;&emsp;▼\
-&emsp;&emsp;&emsp;Validator Node\
-&emsp;&emsp;&emsp;&emsp; &emsp;│\
-&emsp;&emsp;&emsp;&emsp;&emsp;▼\
-&emsp;&emsp;&emsp;Final Response
+When building AI-powered applications, it is easy to focus immediately on models, agents, tools, and frameworks.
 
-The project is intentionally being built incrementally, starting with pure Python and Pydantic before introducing an LLM.
+This project takes a step back.
 
-## 🎯 Why build this?
+Before introducing an AI layer, it explores how a request can move through a well-structured application:
 
-The goal is not to create another chatbot.
+- How is incoming data validated?
+- How is intent represented?
+- How are tasks created?
+- How are tools selected?
+- How are execution results represented and validated?
+- How are failures handled?
+- How do different components communicate?
 
-The goal is to understand the engineering underneath an AI agent:
+The goal is to understand the system around intelligence before adding intelligence itself.
 
-* How structured data moves through an AI system
-* How different components communicate
-* How tasks are represented
-* How tools are selected and executed
-* How validation prevents bad data
-* How workflows can be made modular and extensible
 
-This project is also a foundation for eventually building a pure-Python AI agent without depending on an agent framework.
+## Workflow
+
+                   User Request
+                        │
+                        ▼
+                ┌───────────────┐
+                │    Parser     │
+                │ Intent        │
+                │ Classification│
+                └───────┬───────┘
+                        │
+                        ▼
+                ┌───────────────┐
+                │    Planner    │
+                │ Task Creation │
+                └───────┬───────┘
+                        │
+                        ▼
+                ┌───────────────┐
+                │   Executor    │
+                │ Tool Selection│
+                │ & Execution   │
+                └───────┬───────┘
+                        │
+                        ▼
+                ┌───────────────┐
+                │   Validator   │
+                │ Result Check  │
+                └───────┬───────┘
+                        │
+                        ▼
+                ┌───────────────┐
+                │    Response   │
+                └───────────────┘
